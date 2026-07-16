@@ -64,5 +64,11 @@ Workspace(robot_ws):
 
   Verify it worked:
      # Confirm the workspace env is active
-       <printenv | grep -i AMENT_PREFIX_PATH>
+       <printenv | grep -i AMENT_PREFIX_PATH>cat .gitignore
 
+  
+### add build/, install/, and log/ to .gitignore — those are generated artifacts, not something you want tracked in Git 
+
+     <echo "build/" >> .gitignore>
+     <echo "install/" >> .gitignore>
+     <echo "log/" >> .gitignore>

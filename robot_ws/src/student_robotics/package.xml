@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>Student robotics training package with a minimal ROS 2 node.ls</description>
   <maintainer email="wangdaoz@oregonstate.edu">kevin-lianhu</maintainer>
-  <license><TODO: License declaration></license>
+  <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

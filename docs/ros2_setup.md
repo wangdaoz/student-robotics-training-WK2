@@ -218,7 +218,7 @@
                           Your system is now configured to install ROS 2 packages using `apt`.
 
 #Step 4. Install ROS 2 (desktop includes RViz, demos, tutorials)
-    <sudo apt update>
+     <sudo apt update>
       runs the command with administrator(root) privileges,
       Ubuntu's package manager downloads the latest package index from each repository
      <sudo apt upgrade -y>
@@ -472,6 +472,103 @@ Workspace(robot_ws):
        I asked the claude chat, it answers me to press "Ctrl+C" in each terminal: sends an interrupt signal that cleanly stops the running ROS 2 node.
 
     3. During the installation, I did not understand most commands. So I asked chatgpt to explain these commands in detail.
+
+    4. I did not understand the concept "node", "service","action", underlay workspace, overlay workspace
+       - Node: 
+            basic unit of running a program in ROS 2 -- one process or a part of process;
+
+            do a single, well-defined job and participates in the ROS 2 network
+
+           Note strictly speaking, node ≠ process:
+                        Usually one process runs one node, and that's a fine mental model for now. But ROS 2 does allow several nodes to share one process (called "composition") for efficiency.
+
+       - Service:
+                 A service is ROS 2's request/response communication pattern.
+
+                 a two-way, on-demand exchange: 
+                          client node: one node asks
+                          Server node: another answers, and then the interaction is over
+
+       - Action
+            An action is ROS 2's pattern for long-running tasks — the ones where "ask and wait" isn't good enough because the task takes seconds or minutes, you want progress updates along the way, and you might need to abort it.
+
+            Action has two roles: an action server and an action client
+             But exchange has three parts
+               1. Goal -- the client sends what it wants done ("drive to x=3, y=5"). The server explicitly accepts or rejects the  goal, so the client immediately knows whether the task even started.
+
+               2. Feedback -- while working, the server streams progress updates, The client isn't blocked; it receives these asynchronously and can do other things meanwhile.
+
+               3. Result -- when the task finishes, the server sends the final outcome, along with a status: succeeded, aborted, or canceled.
+
+         - Underlay 
+            the base environment — normally the system-wide ROS 2 installation you get from apt, activated with <source /opt/ros/<distro>/setup.bash>.
+
+         - Overlay
+              your own workspace (robot_ws) built on top of it. After building with colcon, you source the overlay's <install/setup.bash>, and its packages become visible in addition to everything in the underlay.
+
+          Note: If a package with the same name exists in both, the overlay's version wins — it "shadows" the underlay copy. This is why the sourcing order matters, and it's exactly what the milestone's "why must a workspace be sourced after it is built" prompt is getting at: building produces the files, but sourcing is what tells your shell where to find them.
+
+       5. what is "shell" in linux or WSL?
+           I asked chatgpt. It provided me with detailed explaination.
+
+           A shell is a program that provides the command-line interface (CLI) between you and the Linux operating system. It reads the commands you type, interprets them, and asks the operating system (the kernel) to execute them.
+
+           In WSL (Windows Subsystem for Linux), when you open Ubuntu, you are usually placed into a shell such as Bash.
+
+           Relationship between the shell and the kernel
+
+           Here's the hierarchy:
+                                        +--------------------------------------+
+                                        |      Terminal: Your Commands         |
+                                        |  ls, cd, mkdir, python, ros2, etc.   |
+                                        +-----------------▲--------------------+
+                                                          |
+                                                          |
+                                        +-----------------+--------------------+
+                                        |               Shell                  |
+                                        | (bash, zsh, fish, sh, etc.)          |
+                                        | - Reads commands                     |
+                                        | - Parses them                        |
+                                        | - Starts programs                    |
+                                        | - Manages variables                  |
+                                        +-----------------▲--------------------+
+                                                          |
+                                                          |
+                                        +-----------------+--------------------+
+                                        |              Linux Kernel            |
+                                        | - Manages CPU                        |
+                                        | - Manages memory                     |
+                                        | - Manages files                      |
+                                        | - Manages devices                    |
+                                        +-----------------▲--------------------+
+                                                          |
+                                                          |
+                                        +-----------------+--------------------+
+                                        |             Hardware                 |
+                                        +--------------------------------------+
+           The shell itself does not execute programs directly. 
+           Instead, it asks the Linux kernel to create and run processes.
+
+           after a user types a command, shell does following things:
+            Waits for your input.
+            Reads ls.
+            Searches for the executable (/usr/bin/ls).
+            Asks the kernel to start that program.
+            Waits until it finishes.
+            Displays another prompt.
+
+          Other functions:
+               1. navigate directories
+               2. Create files
+               3. Manage environment variables
+               4. Redirect input and output
+               5. Connect commands with pipes
+               6. Run shell scripts
+          Summary:
+                 Terminal: the window where you type.
+                 Shell (Bash): reads and interprets your commands.
+                 Kernel: performs the actual operating system work.
+                 Programs (ls, mkdir, python, ros2): launched by the shell through the kernel.
 
 ## Notes for Future Students
      RViz/GUI apps need an X server or WSLg (built into recent Windows 11) — if rviz2 fails to open a window, that's usually the cause

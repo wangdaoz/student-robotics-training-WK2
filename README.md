@@ -24,19 +24,23 @@ Milestone 2.3 — Create Your First ROS 2 Package
           └── test/
   
 ### Build the workspace and source it
-    #1 go to the workspace ~/robot_ws
-    #2 <colcon build>
-    #4 check what the build created
+ 1. go to the workspace ~/robot_ws
+
+ 2. <colcon build>
+
+ 3. check what the build created
      robot_ws/
       ├── build/
       ├── install/
       ├── log/
       └── src/
-    #4 source install/setup.bash
+
+ 4. source install/setup.bash
         <source install/setup.bash>
 
         This adds your newly built package to ROS 2's search path for the current terminal session, so commands like <ros2 pkg list> or <ros2 run> can find student_robotics
-    #5 Verify it's discoverable
+
+ 5. Verify it's discoverable
        <ros2 pkg list | grep student_robotics>
        If "student_robotics" shows up, the build and source worked.
     ⚠️ One thing the handbook flags as a common mistake: this source install/setup.bash step only applies to that terminal session. Every new terminal you open will need it re-sourced (or you can add it to your ~/.bashrc for convenience while developing).
@@ -48,19 +52,20 @@ Milestone 2.3 — Create Your First ROS 2 Package
       In vim: Esc, then :wq, then Enter
 
 ### Add a minimal node executable and run it through ROS 2
-    #1 
+   1. 
        <cd ~/student-robotics-training-WK2/robot_ws/src/student_robotics/student_robotics>
-    #2 
+   2. 
        <nano my_node.py>
-    #3 
+   3. 
        <cd ..>
        <nano setup.py>
-    #4 
+   4. 
        <cd ~/student-robotics-training-WK2/robot_ws>
        <colcon build>
-    #5
+   5.
        source install/setup.bash
-    #6 
+   6. 
        ros2 run student_robotics my_node
-    #7
+
+   7.
        [INFO] [my_node]: my_node has started

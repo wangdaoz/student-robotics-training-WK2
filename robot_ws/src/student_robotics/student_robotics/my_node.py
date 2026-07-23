@@ -35,19 +35,23 @@ class MyNode(Node):
     def __init__(self):
         super().__init__('my_node')  # In Python, "super()"" is a built-in function that gives you access to methods and 
                                       #attributes of a parent (superclass) from within a child (subclass).
-        self.get_logger().info('my_node has started') #
+
+                                     # super().__init__(), Calls the parent class's constructor.
+        self.get_logger().info('my_node has started') # Output log message to the console indicating that the node has started
 
 def main(args=None):
-    rclpy.init(args=args)
+    rclpy.init(args=args)  # Initialize the ROS 2 client library. This function must be called before any other rclpy_functions are used.
+                           # It sets up the necessary resources for communication with the ROS 2 system.
     node = MyNode()
     try:
-        rclpy.spin(node)
+        rclpy.spin(node)      # keeps the node running and responsive to incoming messages, service requests, and other events.
     except KeyboardInterrupt:
            pass
     finally:
         node.destroy_node()
         if rclpy.ok():
-            rclpy.shutdown()
+            rclpy.shutdown()  # shut down the ROS 2 client library. This function should be called when your nod is done using ROS 2 resources.
+                              # It cleans up any resources that were allocated during initialization.
 
 if __name__ == '__main__':
     main()

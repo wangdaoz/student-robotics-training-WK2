@@ -1,0 +1,27 @@
+[1.767s] Invoking command in '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/src/student_robotics': PYTHONPATH=/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/student_robotics build --build-base /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build install --record /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log --install-scripts $base/lib/student_robotics --single-version-externally-managed install_data
+[2.410s] running egg_info
+[2.467s] writing ../../build/student_robotics/student_robotics.egg-info/PKG-INFO
+[2.468s] writing dependency_links to ../../build/student_robotics/student_robotics.egg-info/dependency_links.txt
+[2.468s] writing entry points to ../../build/student_robotics/student_robotics.egg-info/entry_points.txt
+[2.469s] writing requirements to ../../build/student_robotics/student_robotics.egg-info/requires.txt
+[2.469s] writing top-level names to ../../build/student_robotics/student_robotics.egg-info/top_level.txt
+[2.524s] reading manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+[2.526s] writing manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+[2.526s] running build
+[2.526s] running build_py
+[2.527s] copying student_robotics/status_subscriber.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics
+[2.527s] running install
+[2.539s] running install_lib
+[2.563s] copying /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics/status_subscriber.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics
+[2.564s] byte-compiling /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics/status_subscriber.py to status_subscriber.cpython-312.pyc
+[2.565s] Sorry: IndentationError: unexpected indent (status_subscriber.py, line 31)
+[2.565s] running install_data
+[2.565s] running install_egg_info
+[2.599s] removing '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics-0.0.0-py3.12.egg-info' (and everything under it)
+[2.600s] Copying ../../build/student_robotics/student_robotics.egg-info to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics-0.0.0-py3.12.egg-info
+[2.602s] running install_scripts
+[2.781s] Installing my_node script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[2.782s] Installing status_publisher script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[2.782s] Installing status_subscriber script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[2.783s] writing list of installed files to '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log'
+[2.814s] Invoked command in '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/src/student_robotics' returned '0': PYTHONPATH=/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/student_robotics build --build-base /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build install --record /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log --install-scripts $base/lib/student_robotics --single-version-externally-managed install_data

@@ -1,0 +1,30 @@
+running egg_info
+creating ../../build/student_robotics/student_robotics.egg-info
+writing ../../build/student_robotics/student_robotics.egg-info/PKG-INFO
+writing dependency_links to ../../build/student_robotics/student_robotics.egg-info/dependency_links.txt
+writing requirements to ../../build/student_robotics/student_robotics.egg-info/requires.txt
+writing top-level names to ../../build/student_robotics/student_robotics.egg-info/top_level.txt
+writing manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+reading manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+writing manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics
+copying student_robotics/__init__.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics
+running install
+running install_lib
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics
+copying /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics/__init__.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics
+byte-compiling /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/share/ament_index
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/share/ament_index/resource_index
+creating /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/share/ament_index/resource_index/packages
+copying resource/student_robotics -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/share/ament_index/resource_index/packages
+copying package.xml -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/share/student_robotics
+running install_egg_info
+Copying ../../build/student_robotics/student_robotics.egg-info to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log'

@@ -1,0 +1,5 @@
+  File "/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics/status_publisher.py", line 63
+    finally:
+    ^^^^^^^
+SyntaxError: invalid syntax
+

@@ -23,7 +23,10 @@ setup(
         ],
     },
     entry_points={
-        'console_scripts': [   'my_node = student_robotics.my_node:main',
+        'console_scripts': [   
+            'my_node = student_robotics.my_node:main',
+            'status_publisher = student_robotics.status_publisher:main',
+            'status_subscriber = student_robotics.status_subscriber:main',
         ],
     },
 )

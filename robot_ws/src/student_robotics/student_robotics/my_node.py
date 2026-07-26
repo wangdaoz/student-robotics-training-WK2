@@ -47,6 +47,8 @@ def main(args=None):
         rclpy.spin(node)      # keeps the node running and responsive to incoming messages, service requests, and other events.
     except KeyboardInterrupt:
            pass
+    # 'finally' block is used for cleanup or guaranteed actions;
+    # it always executes after the try block, regardless of whether an exception was raised or not.
     finally:
         node.destroy_node()
         if rclpy.ok():

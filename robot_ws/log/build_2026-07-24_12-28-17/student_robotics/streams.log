@@ -1,0 +1,26 @@
+[1.257s] Invoking command in '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/src/student_robotics': PYTHONPATH=/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/student_robotics build --build-base /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build install --record /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log --install-scripts $base/lib/student_robotics --single-version-externally-managed install_data
+[1.605s] running egg_info
+[1.630s] writing ../../build/student_robotics/student_robotics.egg-info/PKG-INFO
+[1.631s] writing dependency_links to ../../build/student_robotics/student_robotics.egg-info/dependency_links.txt
+[1.632s] writing entry points to ../../build/student_robotics/student_robotics.egg-info/entry_points.txt
+[1.632s] writing requirements to ../../build/student_robotics/student_robotics.egg-info/requires.txt
+[1.632s] writing top-level names to ../../build/student_robotics/student_robotics.egg-info/top_level.txt
+[1.687s] reading manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+[1.688s] writing manifest file '../../build/student_robotics/student_robotics.egg-info/SOURCES.txt'
+[1.688s] running build
+[1.689s] running build_py
+[1.689s] copying student_robotics/status_subscriber.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics
+[1.689s] running install
+[1.700s] running install_lib
+[1.727s] copying /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build/lib/student_robotics/status_subscriber.py -> /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics
+[1.728s] byte-compiling /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics/status_subscriber.py to status_subscriber.cpython-312.pyc
+[1.730s] running install_data
+[1.731s] running install_egg_info
+[1.757s] removing '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics-0.0.0-py3.12.egg-info' (and everything under it)
+[1.757s] Copying ../../build/student_robotics/student_robotics.egg-info to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages/student_robotics-0.0.0-py3.12.egg-info
+[1.759s] running install_scripts
+[1.939s] Installing my_node script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[1.940s] Installing status_publisher script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[1.942s] Installing status_subscriber script to /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/student_robotics
+[1.943s] writing list of installed files to '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log'
+[1.986s] Invoked command in '/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/src/student_robotics' returned '0': PYTHONPATH=/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/kevin-lianhu/student-robotics-training-WK2/robot_ws/install/student_robotics/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/student_robotics build --build-base /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/build install --record /home/kevin-lianhu/student-robotics-training-WK2/robot_ws/build/student_robotics/install.log --install-scripts $base/lib/student_robotics --single-version-externally-managed install_data

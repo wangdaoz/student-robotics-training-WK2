@@ -6,9 +6,11 @@ import time
 class StatusSubscriber(Node):
     def __init__(self):
         super().__init__('status_subscriber')
-
+        self.declare_parameter('topic_name', 'robot_status') # Declare a parameter for the topic name
+        topic_name = self.get_parameter('topic_name').get_parameter_value().string_value
+        
         # subscription: topic name: 'robot_status', message type: callback, queue size(Qos depth):
-        self.subscription = self.create_subscription(String, 'robot_status', 
+        self.subscription = self.create_subscription(String, topic_name,
             self.listener_callback, 10)
         """
          This line alone is what matters. By assigning the returned subscription object to self.subscription (an instance attribute), 

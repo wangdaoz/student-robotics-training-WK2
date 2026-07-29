@@ -8,10 +8,12 @@ setup.py
 ../../build/student_robotics/student_robotics.egg-info/requires.txt
 ../../build/student_robotics/student_robotics.egg-info/top_level.txt
 ../../build/student_robotics/student_robotics.egg-info/zip-safe
+launch/status_demo.launch.py
 resource/student_robotics
 student_robotics/__init__.py
 student_robotics/my_node.py
 student_robotics/status_publisher.py
+student_robotics/status_publisher_stretch.py
 student_robotics/status_subscriber.py
 test/test_copyright.py
 test/test_flake8.py

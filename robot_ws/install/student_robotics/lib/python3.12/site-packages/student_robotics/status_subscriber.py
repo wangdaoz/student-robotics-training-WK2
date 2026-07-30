@@ -35,6 +35,16 @@ class StatusSubscriber(Node):
     def listener_callback(self, msg):
         self.get_logger().info(f'Received status message: "{msg.data}"')
 
+    def parameter_callback(self, params):
+        for param in params:
+            if param.name == 'topic_name':
+                if not param.value:
+                    return SetParametersResult(successful=False, reason='topic_name must not be empty')
+                self.destroy_subscription(self.subscription)
+                self.subscription = self.create_subscription(String, param.value, self.listener_callback, 10)
+                self.get_logger().info(f'topic_name changed to "{param.value}".')
+        return SetParametersResult(successful=True)
+
 def main(args=None):
     rclpy.init(args=args)
     node = StatusSubscriber()

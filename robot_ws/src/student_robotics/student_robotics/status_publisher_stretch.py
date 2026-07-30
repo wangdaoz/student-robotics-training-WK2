@@ -50,6 +50,13 @@ class StatusPublisher(Node):
                 self.timer = self.create_timer(1.0 / param.value, self.timer_callback)
                 self.get_logger().info(f'publish_rate changed to {param.value} Hz.')
 
+            elif param.name == 'topic_name':
+                if not param.value:
+                    return SetParametersResult(successful=False, reason='topic_name must not be empty')
+                self.destroy_publisher(self.publisher_)
+                self.publisher_ = self.create_publisher(String, param.value, 10)
+                self.get_logger().info(f'topic_name changed to "{param.value}".')
+
         return SetParametersResult(successful=True)
 
 def main(args=None):

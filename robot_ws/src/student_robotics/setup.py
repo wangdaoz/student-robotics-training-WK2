@@ -1,3 +1,5 @@
+import os
+from glob import glob
 from setuptools import find_packages, setup
 
 package_name = 'student_robotics'
@@ -10,6 +12,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'),
+            glob('launch/*.launch.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -26,6 +30,7 @@ setup(
         'console_scripts': [   
             'my_node = student_robotics.my_node:main',
             'status_publisher = student_robotics.status_publisher:main',
+            'status_publisher_stretch = student_robotics.status_publisher_stretch:main',
             'status_subscriber = student_robotics.status_subscriber:main',
         ],
     },

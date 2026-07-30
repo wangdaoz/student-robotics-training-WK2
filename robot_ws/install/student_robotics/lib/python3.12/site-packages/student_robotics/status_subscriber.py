@@ -6,9 +6,11 @@ import time
 class StatusSubscriber(Node):
     def __init__(self):
         super().__init__('status_subscriber')
-
+        self.declare_parameter('topic_name', 'robot_status') # Declare a parameter for the topic name
+        topic_name = self.get_parameter('topic_name').get_parameter_value().string_value
+        
         # subscription: topic name: 'robot_status', message type: callback, queue size(Qos depth):
-        self.subscription = self.create_subscription(String, 'robot_status', 
+        self.subscription = self.create_subscription(String, topic_name,
             self.listener_callback, 10)
         """
          This line alone is what matters. By assigning the returned subscription object to self.subscription (an instance attribute), 
@@ -32,6 +34,16 @@ class StatusSubscriber(Node):
 
     def listener_callback(self, msg):
         self.get_logger().info(f'Received status message: "{msg.data}"')
+
+    def parameter_callback(self, params):
+        for param in params:
+            if param.name == 'topic_name':
+                if not param.value:
+                    return SetParametersResult(successful=False, reason='topic_name must not be empty')
+                self.destroy_subscription(self.subscription)
+                self.subscription = self.create_subscription(String, param.value, self.listener_callback, 10)
+                self.get_logger().info(f'topic_name changed to "{param.value}".')
+        return SetParametersResult(successful=True)
 
 def main(args=None):
     rclpy.init(args=args)

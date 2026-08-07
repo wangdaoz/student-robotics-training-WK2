@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
-import time
+from rcl_interfaces.msg import SetParametersResult
 
 class StatusSubscriber(Node):
     def __init__(self):
@@ -13,6 +13,7 @@ class StatusSubscriber(Node):
         self.subscription = self.create_subscription(String, topic_name,
             self.listener_callback, 10)
         """
+         self.subscription
          This line alone is what matters. By assigning the returned subscription object to self.subscription (an instance attribute), 
          it stays referenced as long as the node object exists.
 
@@ -21,8 +22,8 @@ class StatusSubscriber(Node):
          since nothing outside the method holds a reference to it anymore — and the callback would silently stop firing.
          So the assignment-to-'self' is the functional part.
         """
-
-        self.subscription
+             
+        self.add_on_set_parameters_callback(self.parameter_callback)
         """
          a no-op: it just evaluates the attribute and throws the result away.
          it functions more like an inline comment: a visual signal to a human reader (or to some IDEs that flag "attribute assigned

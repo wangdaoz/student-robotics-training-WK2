@@ -6,7 +6,7 @@ package_name = 'student_robotics'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='0.0.1',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -20,7 +20,7 @@ setup(
     maintainer='kevin-lianhu',
     maintainer_email='wangdaoz@oregonstate.edu',
     description='Student robotics training package with a minimal ROS 2 node.',
-    license='TODO: License declaration',
+    license='Apache-2.0',
     extras_require={
         'test': [
             'pytest',

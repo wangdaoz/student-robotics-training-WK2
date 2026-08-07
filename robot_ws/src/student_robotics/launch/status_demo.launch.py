@@ -11,6 +11,7 @@ def generate_launch_description():
         package='student_robotics',
         executable='status_publisher_stretch',
         name='status_publisher',
+        output='screen',
         parameters=[{
             'publish_rate': LaunchConfiguration('publish_rate'),
             'topic_name': LaunchConfiguration('topic_name'),
@@ -21,26 +22,8 @@ def generate_launch_description():
         package='student_robotics',
         executable='status_subscriber',
         name='status_subscriber',
+        output='screen',
         parameters=[{'topic_name': LaunchConfiguration('topic_name')}]
     )
     
     return LaunchDescription([publish_rate_arg, topic_name_arg, publisher_node, subscriber_node])
-    """
-    task 1:Add one launch command that starts publisher and subscriber together.
-    return LaunchDescription([
-        Node(
-            package='student_robotics',
-            executable='status_publisher_stretch',
-            name='status_publisher_stretch',
-            output='screen',
-            parameters=[{'publish_rate': 0.5}] #note, this is based on first strecth goal: Make the publish rate a ROS 2 parameter
-        ),
-        Node(
-            package='student_robotics',
-            executable='status_subscriber',
-            name='status_subscriber',
-            output='screen',
-        )
-
-    ])
-    """

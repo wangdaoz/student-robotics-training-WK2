@@ -249,4 +249,209 @@
 
                    2. lengthen the timeout 5 on the ros2 topic hz check to timeout 15 too.
 
-               after modifying the test script, run the script again. Observe the results.
+                         after modifying the test script, run the script again. Observe the results.
+
+  ## AI Exploration: Package Review 
+          After my package was reviewed by Claude Code, it reminds me that: 
+              "One real (small) behavioral gap for your troubleshooting section:
+               topic_name is only reconfigurable at launch time, not at runtime — if someone tries ros2 param set /status_publisher topic_name new_name while it's running, the parameter callback silently reports success but the publisher keeps using the original topic (only publish_rate has runtime-reconfigure logic). Not a bug relative to what the milestone requires, but it's the kind of "real error encountered" that belongs in your troubleshooting doc so the next intern doesn't waste time confused by it."
+
+          Then, I continued asking: "how to modify current python files to revise it?"
+          There are two solutions to solve this problem.
+
+          ● Solution A: Make the rejection honest
+            
+            1. In "status_publisher_stretch.py", in the section: "def parameter_callback(self, params):..."
+
+             in block: {for param in params: ...}
+               
+                add "elif" branch:
+                   { 
+                    elif param.name == 'topic_name':
+                        return SetParametersResult(
+                                           successful=False,
+                                           reason='topic_name can only be set at launch time, not changed at runtime.'
+                        ) 
+                   }
+
+            2. "status_subscriber.py" 
+                At the top of the file, add: <from rcl_interfaces.msg import SetParametersResult>
+
+                In "class StatusSubscriber(Node)" section, 
+                   1. in subsection: "def __init__(self)", between the codes:
+                     <self.subscription = self.create_subscription(String, topic_name, self.listener_callback, 10)> and
+                     <self.get_logger().info('Status Subscriber Node has started.')> add following codes:
+                       <self.add_on_set_parameters_callback(self.parameter_callback)>
+
+                   2. Add a new method: "parameter_callback(self, params)"
+                             
+                              {
+                                   def parameter_callback(self, params):   # new method
+                                       for param in params:
+                                           if param.name == 'topic_name':
+                                               return SetParametersResult(
+                                                   successful=False,
+                                                   reason='topic_name can only be set at launch time, not changed at runtime.'
+                                               )
+                                       return SetParametersResult(successful=True)
+                                  
+                              }
+                        Result: <Now >ros2 param set /status_publisher topic_name x> will explicitly fail with a clear reason, instead of quietly doing nothing
+                 
+              ● Solution B: Actually support live topic renaming
+                  1. In "status_publisher_stretch.py"
+
+                             in the section: "def parameter_callback(self, params):...", in block: {for param in params: ...}:
+                             modify codes in "elif" branch:
+                                                {
+                                                    elif param.name == 'topic_name':
+                                                        if not param.value:
+                                                            return SetParametersResult(successful=False, reason='topic_name must not be empty')
+                                                        self.destroy_publisher(self.publisher_)
+                                                        self.publisher_ = self.create_publisher(String, param.value, 10)
+                                                        self.get_logger().info(f'topic_name changed to "{param.value}".')
+                                                }
+
+                   2. "status_subscriber.py" 
+                        At the top of the file, add: <from rcl_interfaces.msg import SetParametersResult>
+
+                             In "class StatusSubscriber(Node)" section, 
+                                1. in subsection: "def __init__(self)", between the codes:
+                                   <self.subscription = self.create_subscription(String, topic_name, self.listener_callback, 10)> and  <self.get_logger().info('Status Subscriber Node has started.')> add following codes:
+                                   <self.add_on_set_parameters_callback(self.parameter_callback)>
+
+                                2. Add a new method: "parameter_callback(self, params)"
+
+                                {
+                                   def parameter_callback(self, params):   # new method
+                                       for param in params:
+                                           if not param.value:
+                                               return SetParametersResult(successful=False, reason='topic_name must not be empty')
+                                           self.destroy_subscription(self.subscription)
+                                           self.subscription = self.create_subscription(String, param.value, self.listener_callback, 10)
+                                           self.get_logger().info(f'topic_name changed to "{param.value}".')
+                                       return SetParametersResult(successful=True)
+                                  
+                                }
+
+                           Note: The catch: publisher and subscriber are two separate nodes, so if you ros2 param set them one at a time, there's a brief window (or a permanent state, if you forget the second one) where they're pointed at different topics and stop talking to each other — the same "mismatched topic names" failure mode called out in Milestone 2.4's common mistakes. That's not a bug in the code, just an inherent property of changing shared config independently per-node, but it's worth a troubleshooting note either way.
+ 
+  ## Reconstruction of Verify Script
+          With the help of Claude Code and based on the issues in review feedback, I reconstructed the verify script.
+          Many relevant commands in the script were not understanable for me.
+
+          Issue #1: <if [ -n "$LAUNCH_PID" ] && kill -0 "$LAUNCH_PID" 2>/dev/null; then ...>
+                  ● '-n'
+                    '-n' is a string test operator
+                    It asks:
+                              "Is the length of this string greater than zero?"
+                    It returns:
+                                ● true (exit status 0) if the string is not empty
+
+                                ● false (exit status 1) if the string is empty
+                     another operator '-z': "is string empty?"
+                  
+                  ● <kill -0 "$LAUNCH_PID">
+                     
+                    - 'kill' 
+                     send a signal to the process
+
+                    - '-0'
+                       A special signal number
+                       After it is sent to the process, Linux performs only the checks:
+                                       
+                                          1. Does this PID exist
+                                          2. Does current user have permission to send signal to it
+
+                                        If both conditions are true, return success.
+
+           Issue #2: <<pkill -f "status_publisher_stretch" 2>/dev/null>>
+                    I didn't understand what "-f" implicates/means
+                      
+                     '-f' means: search the entire command line
+
+                     Note 'pkill" stands for process fill; It search preocess by name or pattern
+
+           Issue #3: <trap cleanup EXIT INT TERM>
+                   I didn't understand this command.
+
+                   This command tells the shell: "Whenever this script is about to exit normally, or receives an interrupt (Ctrl+C) or a termination request, run the function named cleanup first."
+
+                   - 'trap'
+                     trap is a Bash built-in command.
+                     Its purpose is to catch signals or shell events and execute some code before the script exits or reacts to that signal.
+
+                      general syntax of trap is:
+                        trap COMMAND/FUNC_NAME SIGNAL1, SIGNAL2, ...
+           Issue #4: <check "workspace builds from a clean source tree" $?>
+                     I didn't understand what '$?' implicates
+
+                     "$?" is an important Bash special variable. It contains:
+                                                             the exit status of the command that ran immediately before this line.
+
+           Issue #5: <shift 3>
+                    I didn't understand what this command implicates
+
+                    This command means: "Discard the first three positional parameters ($1, $2, and $3) and move all remaining arguments forward."
+
+                    - 'shift' 
+                      'shift' means remove given amount of parameters
+
+                      other relevant command: 
+                              
+                              - '$#' decreases by the number shifted(if the shift succeeds)
+
+                              - '$@' Contains only the remaining arguments after the shift.
+
+           Issue  #6: <LAUNCH_PID=$!>
+                       - '$!'
+                         '$!' is a special bash variable that contains the Process ID (PID) of the last command that was started  in the background.
+
+           Issue  #7: <ros2 node list | grep -q "/status_subscriber">
+                     I didn't understand what '-q' implicates.
+
+                     '-q' option stands for silent mode.
+                     with it, without it, grep print machine lines and sets exit status; 
+                     With '-q' not output at all, only sets exit status
+
+                     Exit Status for grep: 0(match found), 1(match not found), 2(error occurred)
+
+           Issue  #8: <echo "$hz_output" | grep "average rate" | tail -1 | awk '{print $3}'>
+                     in this pipeline command, I didn't understand <tail -1> and <awk '{print $3}'>
+
+                     - <tail -1>
+                       
+                        - tail
+                           print the end(tail) of a file or input
+
+                        - '-1'
+                            the last line
+
+                    - <awk '{print $3}'>
+                      
+                        - awk
+                          awk is a text processing language
+                          It is designed to:
+                                                     ● split text into columns (called fields)
+                                                     ● search
+                                                     ● calculate
+                                                     ● reformat text
+                                                     ● generate reports
+
+                        By default, awk uses whitespace(spaces or tabs) as separators.
+
+                        - $3
+                           means the third field of the text
+
+           Issue #9: <awk -v m="$measured" -v e="$expected_rate" \
+            'BEGIN { d = m - e; if (d < 0) d = -d; exit !(d < e * 0.2) }'>
+
+                  I didn't undertsand '-v' option and the section '\'BEGIN {...}'
+
+                  - '-v'
+                    '-v' means: 
+                                Create an AWK variable before the AWK program starts.
+
+                        Bash variables only exist in Bash shell; AWK variable only exists inside AWK
+                  
+                        

@@ -17,59 +17,15 @@
          <cd ~/robot_ws/src>
            -cd access to the target directory
 
-         if 'robot_ws/src' not exist yet, create it first: <mkdir -p ~/robot_ws/src && cd ~/robot_ws/src>
-           -'-p' 
-              An option flag for the 'mkdir' command. It stands for parents.
-
-              <mkdir -p> has two important behaviors:
-                1. Creates parent directory (robot_ws) if they don't already exist
-
-                2. Does not report an error if the directory already exists
-
     # Step 2: Make sure ROS 2 is sourced
      
          <source /opt/ros/<distro>/setup.bash>
-
-         -- "/opt/ros/<dostro>/setup.bash"
-            "opt" is located at the root of the filesystem, not home directory
-
-             How to check whether '/opt' exists:
-             run <ls /> or directly run <ls /opt>
-         -- execute the file: "setup.bash" in current shell
 
         Replace <distro> with whatever ROS 2 version you installed in Milestone 2.2 (e.g. humble, jazzy, iron). Worth checking with <echo $ROS_DISTRO> to confirm it's already sourced.
 
     # Step 3: Run the package creation command
          <ros2 pkg create --build-type ament_python student_robotics>
-          --ros2
-              ROS 2 command line interface(CLI)
 
-          --pkg
-             stands for package; Tells ros2 tool you want to perform an operation related ROS packages
-
-          --create
-            tells ROS 2 to create a new package;
-
-            It generates the necessary files and directory structure automatically; 
-            Without this command, everything must be created manually
-
-          -- '--build-type' stands for build type
-
-          -- 'ament_python'
-               
-               -ament
-                    the offical build system used by ROS2
-
-                    it is responsibilities:
-                      ● Building packages
-                      ● Installing packages
-                      ● Managing package dependencies
-                      ● Making packages discoverable by ROS 2
-
-                -ament_python(ament_cmake)
-                   one of the build type; Telling ROS 2: this package contains python code. Build and install it using the python package system.
-
-                -package name: 'student_robotics'
     # Step 4: Inspect every file generated
                This generates a folder structure like:
 
@@ -96,16 +52,6 @@
       # Step 2: Build the workspace:
                    <colcon build> : build the workspace with colcon
 
-                          - colcon
-                                a command-line build tool: (build and manage software projects that consist of multiple packages;
-                                                             the standard build system for ROS 2 workspaces)
-                                 colcon stands for: COLlective CONstruction
-
-                              What colcon do:
-                                    ● finds all packages in target directory
-
-                                    ● Determines the dependency order
-
                     Expected Results:
                                      Starting >>> student_robotics
                                      Finished <<< student_robotics [x.xx s]
@@ -127,28 +73,12 @@
                                                             ● log/ — build logs, useful for debugging if something goes wrong
 
       # Step 4: Source the install
-                <source install/setup.bash>: add newly built package to ROS 2's search path for the current terminal session
+                <source install/setup.bash> 
+                add newly built package to ROS 2's search path for the current terminal session
                 so commands like ros2 pkg list or ros2 run can find student_robotics.
 
       # Step 5: Verify it's discoverable
                  <ros2 pkg list | grep student_robotics>
-                    ● ros2 
-                           the ROS 2 command-line interface (CLI)
-                    ● pkg
-                          tells the CLI you want to work with packages.
-                    ● list
-                          lists all ROS 2 packages that ROS 2 can currently find
-
-                  -- '|': called pipe: 
-                   It takes the output of the command on the left and passes it as the input to the command on the right
-
-                  -- 'grep'
-                           searches text for lines that match a given pattern.
-
-                  -- <grep student_robotics>
-                     show only lines containing "student_robotics"
-
-                     ⚠️ One thing the handbook flags as a common mistake: this source install/setup.bash step only applies to that terminal session. Every new terminal you open will need it re-sourced (or you can add it to your ~/.bashrc for convenience while developing).
   _________________________________________________________________________________________________________________________________
 
    Task 3 Add a minimal node executable and run it through ros2 run
@@ -158,20 +88,7 @@
      # Step 2: Create a minimal node file
                  <nano my_node.py>
 
-                  --nano
-                     'nano' is the command that starts the Nano text editor
-                     Nano works entirely inside the terminal
-
-                     A text editing screen will show up like:
-                                                                      GNU nano 8.0                     New Buffer
-
-                                                                      |
-
-                                                                      ^G Help    ^O Write Out   ^R Read File
-                                                                      ^X Exit    ^K Cut         ^U Paste
-                                                                      ...
-
-      # Step 3: Register it as an executable in setup.py
+     # Step 3: Register it as an executable in setup.py
                  <cd ..>  go to the folder containing "setup.py"
                  <nano setup.py> 
 
@@ -184,6 +101,7 @@
                             },
 
                 This tells ROS 2: "the command my_node should call the main() function inside student_robotics/my_node.py." Save and exit.
+
       # Step 4: rebuild the workspace
                  <cd ~/student-robotics-training-WK2/robot_ws>
                  <colcon build>
@@ -334,4 +252,166 @@ ________________________________________________________________________________
 
              In 'package.xml' and 'setup.py', when I modified the item "LICENSE", the claude first advised me to wirite "Apache-2.0" or "MIT". But when I created this repo in GitHub, I didn't set 'LICENSE'. Then I asked claude further, the claude said "In that case, common choices for student/training repos are Apache-2.0 or MIT — either is a reasonable default, but it's a decision for whoever owns the repo, not something to pick silently on your own." So, I didn't modify this item.
 
-## ## Notes for Future Students
+    Task 5: Add a minimal node executable and run it through ros2 run.
+         In robot_ws/src/student_robotics/student_robotics/my_node.py, my segments of codes I didn't understand.
+
+         Then, with the help of AI tools, I learned the following knowledge:
+          
+                               """
+                                rclpy is the Python client library for ROS 2 (Robot Operating System 2). 
+                                 It allows you to write ROS 2 applications (called nodes) in Python.
+
+                                with rclpy you can:
+                                   ● Create and manage ROS 2 nodes that can communicate with other nodes in the ROS 2 ecosystem
+                                   ● Publish messages to topics
+                                   ● Subscribe to topics
+                                   ● Provide and call services
+                                   ● create and use actions
+                                   ● Set timers
+                                   ● Access paraeters
+                                   ● Interact with the ROS 2 communication system
+                                """
+
+                                """
+                                 Common rclpy functions:
+                                    ● rclpy.init(args=None): Initializes the ROS 2 client library. This function must be called    before any other rclpy functions are used. It sets up the necessary resources for communication with the ROS 2 system.
+
+                                    ● rclpy.shutdown(): Shuts down the ROS 2 client Library. This function should be called when your node is done using ROS 2 resources. It cleans up any resources that were allocated during initialization.
+
+                                    ● rclpy.spin(node): enters a loop that keeps the node alive and responsive to incoming messages, service requests, and other events.
+
+                                    ● Node: base class for creating ROS 2 nodes. It provides methods for publishing and subscribing to topics, providing and calling services, setting timers, and accessing parameters.
+
+                                    ● create_publisher(msg_type, topic_name, qos_profile): creates a publisher for a specific message type and topic.
+
+                                    ● create_subscription(msg_type, topic_name, callback, qos_profile): creates a subscription to a specific message type and topic, with a callback function that is called when a message is received.
+
+                                    ● create_timer(timer_period_sec, callback): creates a timer that calls a specified callback function at a specified interval.
+
+                                    ● get_logger(): returns a logger object that can be used to log messages at different severity levels (info, warning, error, etc.).
+
+                                """
+                                - <super().__init__('my_node')>
+                                      # In Python, "super()"" is a built-in function that gives you access to methods and 
+                                      #attributes of a parent (superclass) from within a child (subclass).
+
+                                - <self.get_logger().info('my_node has started')>
+                                      # Output log message to the console indicating that the node has started
+
+                                - <rclpy.init(args=args)>
+                                     # Initialize the ROS 2 client library. This function must be called before any other rclpy_functions are used.
+                                     # It sets up the necessary resources for communication with the ROS 2 system.
+
+                                - <rclpy.spin(node)>
+                                     # keeps the node running and responsive to incoming messages, service requests, and other events.
+
+                                - <try:
+                                    ...
+                                   except xxx:
+                                     ...           
+                                   finally:           
+                                        ....>
+                                        # 'finally' block is used for cleanup or guaranteed actions;
+                                        # it always executes after the try block, regardless of whether an exception was raised or not.
+## Notes for Future Students
+     Task 1.Create student_robotics inside robot_ws/src using ament_python.
+      Step 1:
+            if 'robot_ws/src' not exist yet, create it first: <mkdir -p ~/robot_ws/src && cd ~/robot_ws/src>
+           -'-p' 
+              An option flag for the 'mkdir' command. It stands for parents.
+
+              <mkdir -p> has two important behaviors:
+                1. Creates parent directory (robot_ws) if they don't already exist
+
+                2. Does not report an error if the directory already exists
+
+      Step 2:
+             -- "/opt/ros/<dostro>/setup.bash"
+            "opt" is located at the root of the filesystem, not home directory
+
+             How to check whether '/opt' exists:
+             run <ls /> or directly run <ls /opt>
+             -- execute the file: "setup.bash" in current shell
+
+      Step 3:
+              --ros2
+              ROS 2 command line interface(CLI)
+
+              --pkg
+                stands for package; Tells ros2 tool you want to perform an operation related ROS packages
+
+              --create
+               tells ROS 2 to create a new package;
+
+              It generates the necessary files and directory structure automatically; 
+               Without this command, everything must be created manually
+
+              -- '--build-type' stands for build type
+
+              -- 'ament_python'
+               
+                 -ament
+                    the offical build system used by ROS2
+
+                    it is responsibilities:
+                      ● Building packages
+                      ● Installing packages
+                      ● Managing package dependencies
+                      ● Making packages discoverable by ROS 2
+
+                  -ament_python(ament_cmake)
+                   one of the build type; Telling ROS 2: this package contains python code. Build and install it using the python package system.
+
+                  -package name: 'student_robotics'
+___________________________________________________________________________________________________________________________________
+
+      Task 2: Build the workspace and source the result
+         
+          Step 2:
+                - colcon
+                             a command-line build tool: (build and manage software projects that consist of multiple packages;
+                                                             the standard build system for ROS 2 workspaces)
+                                 colcon stands for: COLlECTIVE CONSTRUCTION
+
+                              What colcon do:
+                                    ● finds all packages in target directory
+
+                                    ● Determines the dependency order
+
+          Step 5:
+                    ● ros2 
+                           the ROS 2 command-line interface (CLI)
+                    ● pkg
+                          tells the CLI you want to work with packages.
+                    ● list
+                          lists all ROS 2 packages that ROS 2 can currently find
+
+                    -- '|': called pipe: 
+                      It takes the output of the command on the left and passes it as the input to the command on the right
+
+                    -- 'grep'
+                           searches text for lines that match a given pattern.
+
+                    -- <grep student_robotics>
+                     show only lines containing "student_robotics"
+
+                     ⚠️ One thing the handbook flags as a common mistake: this source install/setup.bash step only applies to that terminal session. Every new terminal you open will need it re-sourced (or you can add it to your ~/.bashrc for convenience while developing).
+__________________________________________________________________________________________________________________________________
+         Task 3: Add a minimal node executable and run it through ros2 run
+
+           Step 2:
+                  --nano
+                     'nano' is the command that starts the Nano text editor
+                     Nano works entirely inside the terminal
+
+                     A text editing screen will show up like:
+                                                                      GNU nano 8.0                     New Buffer
+
+                                                                      |
+
+                                                                      ^G Help    ^O Write Out   ^R Read File
+                                                                      ^X Exit    ^K Cut         ^U Paste
+                                                                      ...                 
+___________________________________________________________________________________________________________________________________
+         
+              

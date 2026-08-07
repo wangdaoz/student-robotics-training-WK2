@@ -19,9 +19,31 @@
            Because Installation of the ROS 2 distribution in my operating system(WSL) and creating first package involves many details/steps and I should make documents to record these steps and commands. So I spent much time to learn relevant commands including asking AI tools once I encountered commands I didn't understand.
 
 •	What mistake did I repeat?
-           I didn't repeat any mistake.
+         Milestone 2.3, before I built a package named "student_robotics", I had repeated forgotten make the subdirectory inside workspace directory: student-robotics-training-WK2/robot_ws/src/.
+         Input command: 
+         '''
+            mkdir -p ~/robot_ws/src && cd ~/robot_ws/src
+         '''
+
+         I always forget what the command <source install/setup.bash> implicates
+               
+               Adds your newly built package to ROS 2's search path for the current terminal session, so commands like <ros2 pkg list> or <ros2 run> can find student_robotics
+
+               
 
 •	What was the most useful AI prompt?
+
+           In milestone 2.3, Claude Code reminded me that:
+                  ⚠️ One thing the handbook flags as a common mistake: this source install/setup.bash step only applies to that terminal session. Every new terminal you open will need it re-sourced (or you can add it to your ~/.bashrc for convenience while developing).
+                                                   '''
+                                                    nano ~/ .bashrc
+                                                    source /opt/ros/<distro>/setup.bash
+                                                   '''
+                     Note: Replace <distro> with your actual ROS 2 distribution (e.g. humble, jazzy, iron), and adjust the path if your workspace isn't at ~/robot_ws.
+
+                     In nano: Ctrl+O, then Enter, then Ctrl+X
+                    In vim: Esc, then :wq, then Enter
+
            In milestone 2.5, after Claude code reviewed my package, 
            It reminded me some flaws in my package,two prompts is most useful.
             1. Missing runtime dependency declarations in package.xml. 
@@ -49,4 +71,4 @@
 
 •	Can another engineer reproduce my work? What evidence proves this?
             Yes.
-            From milestones 2.2-2.5, each milestone, I recorded information about how to do the mission in a setup file or 'README.md' file with plenty of detail information. So, another engineer can do it with the guide of these files. In the package: student_robotics, I wrote annotation for each segment of codes that might be difficult to understand for any new engineer.
+            From milestones 2.2-2.5, each milestone, I recorded information about how to do the mission in a setup file or 'README.md' file with plenty of detail information. So, another engineer can do it with the guide of these files. In the package: student_robotics, I wrote annotation for each segment of codes that might be difficult to understand for any new engineer. Finally, with the help of Claude Code, I made a clone of the repo and revised all errors.

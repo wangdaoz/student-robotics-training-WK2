@@ -67,7 +67,7 @@ ________________________________________________________________________________
       Contents:
           ● <__init__.py> — marks the directory as a Python package (can be empty)
            
-          ● <my_node.py> — our minimal node, added in the previous task
+          ● <my_node.py> —  minimal node executable, added in the previous task
 
       Why it matters:
           This is where your real code lives. Everything else in the package (manifest, setup files, resource marker) exists to package this folder correctly and make its contents discoverable and runnable through ROS 2 tooling.

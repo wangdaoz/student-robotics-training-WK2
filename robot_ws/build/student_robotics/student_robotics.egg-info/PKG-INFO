@@ -1,8 +1,0 @@
-Metadata-Version: 2.1
-Name: student-robotics
-Version: 0.0.0
-Summary: Student robotics training package with a minimal ROS 2 node.
-Maintainer: kevin-lianhu
-Maintainer-email: wangdaoz@oregonstate.edu
-License: TODO: License declaration
-Provides-Extra: test

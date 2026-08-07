@@ -2,12 +2,13 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>student_robotics</name>
-  <version>0.0.0</version>
-  <description>Student robotics training package with a minimal ROS 2 node.ls</description>
+  <version>0.0.1</version>
+  <description>Student robotics training package with a minimal ROS 2 node.</description>
   <maintainer email="wangdaoz@oregonstate.edu">kevin-lianhu</maintainer>
-  <license>TODO: License declaration</license>
+  <license>Apache-2.0</license>
   
   <depend>rclpy</depend>
+  <depend>rcl_interfaces</depend>
   <depend>std_msgs</depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>

@@ -13,6 +13,9 @@ class StatusPublisher(Node):
         self.declare_parameter('topic_name', 'robot_status') 
 
         publish_rate = self.get_parameter('publish_rate').get_parameter_value().double_value
+        while publish_rate <= 0.0:
+            self.get_logger().warn('publish_rate must be greater than 0. Please input a valid value for publish_rate!')
+            publish_rate = float(input('Enter a valid publish_rate (greater than 0): '))
         topic_name = self.get_parameter('topic_name').get_parameter_value().string_value
 
         self.publisher_ = self.create_publisher(String, topic_name, 10)
